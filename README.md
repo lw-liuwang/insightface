@@ -2,11 +2,40 @@
  Face Recognition models
  List of models by various depth IResNet and training datasets:中的 R100
 
-# ONNX 运行时推理说明
+### ONNX 运行时推理说明
 
 ## 概述
 
 `onnx_runtime/onnx_inference_all.py` 脚本用于人脸检测和特征提取，使用 InsightFace 框架和 ONNX 模型进行推理。
+
+## 工具脚本
+
+### 1. 检查 ONNX 模型 Opset 版本
+- **脚本**: `onnx_runtime/check_opset.py`
+- **功能**: 检查 ONNX 模型的 opset 版本和基本信息
+- **使用方法**:
+  ```bash
+  python onnx_runtime/check_opset.py
+  ```
+- **输出信息**:
+  - 模型路径
+  - Opset 版本
+  - 模型输入输出信息
+
+### 2. 修复 ONNX 模型输入形状
+- **脚本**: `onnx_runtime/fix_input_shape.py`
+- **功能**: 将动态输入形状转换为固定形状，支持 Horizon 芯片转换
+- **使用方法**:
+  ```bash
+  python onnx_runtime/fix_input_shape.py
+  ```
+- **输出**:
+  - 原始输入形状
+  - 修复后的输入形状
+  - 修复后的模型文件: `model_fixed.onnx`
+- **应用场景**:
+  - Horizon 芯片不支持动态维度
+  - 需要将 batch size 从 `None` 改为固定值（如 1）
 
 ## 使用的模型
 

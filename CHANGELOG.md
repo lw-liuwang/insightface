@@ -7,6 +7,29 @@
 
 ## [Unreleased]
 
+## [2026.02.08]
+
+### 新增 (Added)
+- 新增 `onnx_runtime/check_opset.py` 脚本，用于检查 ONNX 模型的 opset 版本
+- 新增 `onnx_runtime/fix_input_shape.py` 脚本，用于修复 ONNX 模型的动态输入形状
+
+### 修复 (Fixed)
+- 修复 ONNX 模型输入形状从动态维度 `['None', 3, 112, 112]` 改为固定维度 `[1, 3, 112, 112]`
+- 修复后的模型保存为 `model_fixed.onnx`，可用于 Horizon 芯片转换
+
+### 技术细节 (Technical Details)
+
+#### ONNX 模型信息
+- **Opset 版本**: ai.onnx v11
+- **生产者**: pytorch v1.7
+- **原始输入形状**: `['None', 3, 112, 112]`（动态 batch size）
+- **修复后输入形状**: `[1, 3, 112, 112]`（固定 batch size = 1）
+- **输出形状**: `[1, 512]`
+
+#### 脚本功能
+- `check_opset.py`: 检查 ONNX 模型的 opset 版本和基本信息
+- `fix_input_shape.py`: 将动态输入形状转换为固定形状，支持 Horizon 芯片转换
+
 ## [2026.02.07]
 
 ### 新增 (Added)
